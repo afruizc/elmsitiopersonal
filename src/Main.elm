@@ -18,6 +18,8 @@ import Url.Parser as Url exposing (Parser)
 type Page
     = Home
     | OurWork
+    | Contact
+    | Clients
     | Error
 
 
@@ -91,6 +93,12 @@ viewPage model =
 
         OurWork ->
             { title = "our work", body = [ viewOurWork model ] }
+
+        Clients ->
+            { title = "clients", body = [ viewClients model ] }
+
+        Contact ->
+            { title = "contact", body = [ viewContact model ] }
 
         Error ->
             { title = "error", body = [ div [] [ text "error" ] ] }
@@ -193,15 +201,28 @@ viewOurWork model =
             , style "margin-left" "2rem"
             , style "color" Styles.darkColor
             ]
-            [ h1 [ style "margin-top" "1rem" ] [ text "Our Work" ] ]
+            [ h1 [] [ text "Our Work" ] ]
         ]
+
+
+viewClients : Model -> Html Msg
+viewClients model =
+    genericView model Styles.blueColor "left" <|
+        []
+
+
+viewContact : Model -> Html Msg
+viewContact model =
+    genericView model Styles.blueColor "left" <|
+        []
 
 
 genericView : Model -> String -> String -> List (Html Msg) -> Html Msg
 genericView model color side content =
     div Styles.container
         (drawers model
-            ++ [ span
+            ++ [ img (src "/logo.png " :: Styles.logoImg) []
+               , span
                     ([ onClick ToggleDrawers
                      , style "z-index" "1"
                      ]
@@ -217,7 +238,7 @@ urlToPage : Url -> Page
 urlToPage url =
     url
         |> Url.parse urlParser
-        |> Maybe.withDefault Error
+        |> Maybe.withDefault Home
 
 
 urlParser : Parser (Page -> a) a
@@ -226,6 +247,8 @@ urlParser =
         [ Url.map Home Url.top
         , Url.map Home <| Url.s "home"
         , Url.map OurWork <| Url.s "work"
+        , Url.map Clients <| Url.s "clients"
+        , Url.map Contact <| Url.s "contact"
         ]
 
 

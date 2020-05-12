@@ -21,7 +21,7 @@ greenColor =
 
 
 blueColor =
-    "rgb(48, 110, 212)"
+    "rgb(135, 205, 222)"
 
 
 circleStyles : String -> String -> String -> List (Attribute msg)
@@ -52,6 +52,7 @@ logoImg =
     , style "left" "20px"
     , style "top" "20px"
     , style "max-width" "60px"
+    , style "z-index" "1"
     ]
 
 
@@ -153,6 +154,7 @@ mainDiv bgColor justify =
     , style "display" "flex"
     , style "align-items" "center"
     , style "justify-content" justify
+    , style "padding" "3rem"
     , style "width" "100%"
     , style "height" "100%"
     ]
